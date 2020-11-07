@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Quản Lý Diễn Viên</title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Thêm Diễn Viên</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="/dienviens/add" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+              <label for="">Mã Diễn Viên</label>
+              <input type="text" name="ma_dienvien" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="">Tên Diễn Viên</label>
+              <input type="text" name="ten_dienvien" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="">Năm Sinh</label>
+              <input type="text" name="namsinh" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="">Avatar</label>
+                <input type="file" name="avatar" class="form-control-file" id="exampleFormControlFile1">
+              </div>
+            <button type="submit" class="btn btn-primary">Add</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  </tbody>
+  </table>
+
+  <h1>Danh Sách Diễn Viên</h1>
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    Thêm mới
+  </button>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">STT</th>
+        <th scope="col">id</th>
+        <th scope="col">Mã Số</th>
+        <th scope="col">Họ và Tên</th>
+        <th scope="col">Năm sinh</th>
+        <th scope="col">Avatar</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for(let i = 0; i< dienviens.length; i++) { %>
+      <tr>
+        <th scope="row"><%=i%></th>
+        <td><%= dienviens[i].id%></td>
+        <td><%= dienviens[i].ma_dienvien%></td>
+        <td><%= dienviens[i].ten_dienvien%></td>
+        <td><%= dienviens[i].namsinh%></td>
+        <td><%if(dienviens[i].avatar) {%><img style="width: 100px; height: 100px;" class="img-thumbnail"
+            src="<%= dienviens[i].avatar%>" alt=""><%}%></td>
+          <td>
+            <a class="btn btn-danger mr-1" href="/dienviens/delete/<%=dienviens[i].ma_dienvien%>">Delete</a>
+          <a class="btn btn-success" href="/dienviens/update/form/<%=dienviens[i].ma_dienvien%>">Update</a< /td>
+      </tr>
+      <% } %>
+    </tbody>
+  </table>
+  </div>
+
+  
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
