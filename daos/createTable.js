@@ -7,8 +7,8 @@ AWS.config.update({
 });
 
 const dyamoDB = new AWS.DynamoDB();
-const table = "dienvien";
-const keytable = "ma_dienvien";
+const table = "sanpham";
+const keytable = "ma_sanpham";
 
 const params = {
   TableName: table,

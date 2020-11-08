@@ -6,29 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <title>Cập nhật diễn viên</title>
+    <title>Cập nhật San Pham</title>
 </head>
 
 <body>
     <div class="container">
         <div class="row">
             <div class="col-md-8">
-                <h1>Form update Diễn Viên</h1>
+                <h1>Form update San Pham</h1>
                 <!-- Form Update -->
-                <form action="/dienviens/update/<%=dienvien.ma_dienvien%>" enctype="multipart/form-data" method="POST">
+                <form action="/sanphams/update/<%=sanpham.ma_sanpham%>" method="POST">
                     <div class="form-group">
-                        <label for="">Tên Diễn Viên</label>
-                        <input type="text" name="ten_dienvien" value="<%=dienvien.ten_dienvien%>" class="form-control"
+                        <label for="">Tên</label>
+                        <input type="text" name="ten_sanpham" value="<%=sanpham.ten_sanpham%>" class="form-control"
                             id="name">
                     </div>
                     <div class="form-group">
-                        <label for="">Nam sinh</label>
-                        <input type="text" name="namsinh" value="<%=dienvien.namsinh%>" class="form-control" id="name"
+                        <label for="">So Luong</label>
+                        <input type="text" name="soluong" value="<%=sanpham.soluong%>" class="form-control" id="name"
                             aria-describedby="">
-                    </div>
-                    <div class="form-group">
-                        <label for="">Avatar</label>
-                        <input type="file" name="avatar" class="form-control-file" id="exampleFormControlFile1">
                     </div>
                     <a href="/" class="btn btn-danger">Cancel</a>
                     <button type="submit" class="btn btn-primary">Update</button>

@@ -1,4 +1,3 @@
-const { OpsWorks } = require("aws-sdk");
 const AWS = require("aws-sdk");
 const BUCKET_NAME = "dienvien-bucket";
 require("dotenv").config();
@@ -13,27 +12,27 @@ const docClient = new AWS.DynamoDB.DocumentClient();
 
 const { table } = require("./createTable");
 
-const getAllDienVien = async () => {
+const getAllSanPham = async () => {
   const params = {
     TableName: table,
   };
   return await (await docClient.scan(params).promise()).Items;
 };
 
-const getSingleID = async (ma_dienvien) => {
+const getSingleID = async (ma_sanpham) => {
   const options = {
     TableName: table,
     Key: {
-      ma_dienvien: ma_dienvien,
+      ma_sanpham: ma_sanpham,
     },
   };
   return await (await docClient.get(options).promise()).Item;
 };
 
-const addDienVien = async (dienvien) => {
+const addSanPham = async (sanpham) => {
   const options = {
     TableName: table,
-    Item: dienvien,
+    Item: sanpham,
   };
   return await docClient
     .put(options)
@@ -44,35 +43,19 @@ const addDienVien = async (dienvien) => {
     });
 };
 
-const deleteDienVien = async (ma_dienvien) => {
-  const options = {
-    TableName: table,
-    Key: {
-      ma_dienvien: ma_dienvien,
-    },
-  };
-  return await docClient
-    .delete(options)
-    .promise()
-    .catch((err) => {
-      console.log(err);
-      return null;
-    });
-};
 
-const updateDienvien = async (dienvien) => {
-  console.log(dienvien);
+
+const updateSanPham = async (sanpham) => {
   const options = {
     TableName: table,
     Key: {
-      ma_dienvien: dienvien.ma_dienvien,
+      ma_sanpham: sanpham.ma_sanpham,
     },
     UpdateExpression:
-      "set ten_dienvien = :name, namsinh=:birthday, avatar=:avatar",
+      "set ten_sanpham = :name, soluong=:soLuong",
     ExpressionAttributeValues: {
-      ":name": dienvien.ten_dienvien,
-      ":birthday": dienvien.namsinh,
-      ":avatar": dienvien.avatar,
+      ":name": sanpham.ten_sanpham,
+      ":soLuong": sanpham.soluong,
     },
     ReturnValues: "UPDATED_NEW",
   };
@@ -86,27 +69,11 @@ const updateDienvien = async (dienvien) => {
     });
 };
 
-const s3 = new AWS.S3({
-  accessKeyId: process.env.ACCESS_KEY_ID,
-  secretAccessKey: process.env.SECRET_ACCESS_KEY,
-});
 
-const uploadAvatar = async (avatar) => {
-  const params = {
-    Bucket: BUCKET_NAME,
-    Key: avatar.name,
-    Body: avatar.data,
-    ACL: "public-read",
-  };
-  return await (await s3.upload(params).promise()).Location;
-};
 
 module.exports = {
-  getAllDienVien,
+  getAllSanPham,
   getSingleID,
-  addDienVien,
-  deleteDienVien,
-  updateDienvien,
-
-  uploadAvatar,
+  addSanPham,
+  updateSanPham
 };

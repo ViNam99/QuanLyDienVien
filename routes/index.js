@@ -4,28 +4,24 @@ const { v4: uuidv4 } = require("uuid");
 
 require("dotenv").config();
 
-const dienvienDAO = require("../daos/daos");
+const sanphamDAO = require("../daos/daos");
 /* GET home page. */
 
 router.get("/", async (req, res) => {
-  const dienviens = await dienvienDAO.getAllDienVien();
-  res.render("home", { dienviens: dienviens });
+  const sanphams = await sanphamDAO.getAllSanPham();
+  res.render("home", { sanphams: sanphams });
 });
 
-router.post("/dienviens/add", async (req, res) => {
-  let files = req.files;
-  let avatar = await files.avatar;
-  const uploadS3 = await dienvienDAO.uploadAvatar(avatar);
+router.post("/sanphams/add", async (req, res) => {
 
-  const dienvien = {
+  const sanpham = {
     id: uuidv4(),
-    ma_dienvien: req.body.ma_dienvien,
-    ten_dienvien: req.body.ten_dienvien,
-    namsinh: req.body.namsinh,
-    avatar: uploadS3,
+    ma_sanpham: req.body.ma_sanpham,
+    ten_sanpham: req.body.ten_sanpham,
+    soluong: req.body.soluong,
   };
 
-  const success = await dienvienDAO.addDienVien(dienvien);
+  const success = await sanphamDAO.addSanPham(sanpham);
   if (success) {
     res.redirect("/");
   } else {
@@ -33,41 +29,28 @@ router.post("/dienviens/add", async (req, res) => {
   }
 });
 
-router.get("/dienviens/delete/:id", async (req, res) => {
-  const ma_dienvien = req.params.id;
-  const success = await dienvienDAO.deleteDienVien(ma_dienvien);
-  if (success) {
-    res.redirect("/");
-  } else {
-    res.status(500).send(err);
-  }
-});
-
-router.get('/dienviens/update/form/:id', async (req, res) => {
-  const ma_dienvien = req.params.id;
-  const dienvien = await dienvienDAO.getSingleID(ma_dienvien);
-  res.render("FormUpdate", {dienvien: dienvien});
+router.get('/sanphams/update/form/:id', async (req, res) => {
+  const ma_sanpham = req.params.id;
+  console.log(ma_sanpham);
+  const sanpham = await sanphamDAO.getSingleID(ma_sanpham);
+  res.render("FormUpdate", {sanpham: sanpham});
 })
 
-router.post('/dienviens/update/:id', async (req , res) => {
-  let files = req.files;
-  let avatar = await files.avatar;
-  const uploadS3 = await dienvienDAO.uploadAvatar(avatar);
+ router.post('/sanphams/update/:id', async (req , res) => {
 
-  const dienvien = {
-    ma_dienvien: req.params.id,
-    ten_dienvien: req.body.ten_dienvien,
-    namsinh: req.body.namsinh,
-    avatar: uploadS3,
-  }
+   const sanpham = {
+     ma_sanpham: req.params.id,
+     ten_sanpham: req.body.ten_sanpham,
+     soluong: req.body.soluong,
+   }
 
-  const success = await dienvienDAO.updateDienvien(dienvien);
-  if (success) {
-    res.redirect("/");
-  } else {
-    res.status(500).send(err);
-  }
+   const success = await sanphamDAO.updateSanPham(sanpham);
+   if (success) {
+     res.redirect("/");
+   } else {
+     res.status(500).send(err);
+   }
 
-})
+ })
 
 module.exports = router;
